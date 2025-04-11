@@ -1,24 +1,34 @@
 import subprocess
+import os
+from dotenv import load_dotenv
 
-def dump_database():
-    # Full path to pg_dump
-    pg_dump_path = r"D:\programs-16\bin\pg_dump"  # Change if your pg_dump is elsewhere
+def dump_all_databases():
+    load_dotenv()
 
-    # PostgreSQL credentials and target file
-    user = "postgres"
-    db_name = "hospitalmanagement"
-    output_file = "hospital_dump.sql"
+    pg_dump_path = os.getenv("PG_DUMP_PATH")
+    pg_user = os.getenv("PG_USERNAME")
+    pg_password = os.getenv("PG_PASSWORD")
+    db_list_raw = os.getenv("PG_DATABASES")
 
-    # Build the command
-    command = [pg_dump_path, "-U", user, "-d", db_name, "-f", output_file]
+    if not all([pg_dump_path, pg_user, pg_password, db_list_raw]):
+        raise ValueError("Missing required environment variables (PG_DUMP_PATH, PG_USERNAME, PG_PASSWORD, PG_DATABASES)")
 
-    try:
-        # Run the command with environment variable for password prompt bypass (optional)
-        result = subprocess.run(command, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        print(f"Database '{db_name}' dumped successfully to '{output_file}'")
+    # Convert comma-separated string to list and strip spaces
+    databases = [db.strip() for db in db_list_raw.split(",")]
 
-    except subprocess.CalledProcessError as e:
-        print(f"Error during pg_dump:\n{e.stderr.decode()}")
+    env = os.environ.copy()
+    env["PGPASSWORD"] = pg_password
+
+    for db in databases:
+        output_file = f"{db}.sql"
+        command = [pg_dump_path, "-U", pg_user, "-d", db, "-f", output_file]
+
+        try:
+            subprocess.run(command, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=env)
+            print(f"✅ Dumped '{db}' to '{output_file}'")
+        except subprocess.CalledProcessError as e:
+            print(f"❌ Failed to dump '{db}':\n{e.stderr.decode()}")
 
 if __name__ == "__main__":
-    dump_database()
+    dump_all_databases()
+

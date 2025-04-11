@@ -1,21 +1,26 @@
 import subprocess
+import os
+from dotenv import load_dotenv
 
 def restore_roles_from_sql():
-    # Define the full path to psql
-    psql_path = r"D:\programs-16\bin\psql"
-    
-    # Define the command to execute with the full path to psql
-    command = [psql_path, "-d", "postgresql://neondb_owner:npg_D1Tywt5zEYUW@ep-square-sea-a5693zzq-pooler.us-east-2.aws.neon.tech/neondb?sslmode=require", "-f", "roles.sql"]
-    
+    load_dotenv()  # Load environment variables from .env
+
+    # Get path to psql and Neon DB connection URL from .env
+    psql_path = os.getenv("PSQL_PATH")
+    neon_url = os.getenv("NEON_DATABASE_URL")
+
+    if not psql_path:
+        raise ValueError("Environment variable PSQL_PATH is not set.")
+    if not neon_url:
+        raise ValueError("Environment variable NEON_DATABASE_URL is not set.")
+
+    command = [psql_path, "-d", neon_url, "-f", "roles.sql"]
+
     try:
-        # Run the command
         result = subprocess.run(command, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        
-        # Output success message
         print("Roles restored successfully from roles.sql")
-    
+
     except subprocess.CalledProcessError as e:
-        # If an error occurs, print the error message
         print(f"Error executing command: {e.stderr.decode()}")
         print("Roles restoration failed.")
 
