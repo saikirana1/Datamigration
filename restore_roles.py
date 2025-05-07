@@ -2,8 +2,11 @@ import subprocess
 import os
 from dotenv import load_dotenv
 
+
+load_dotenv()
+
 def restore_roles_from_sql():
-    load_dotenv()  # Load environment variables from .env
+    #load_dotenv()  # Load environment variables from .env
 
     # Get path to psql and Neon DB connection URL from .env
     psql_path = os.getenv("PSQL_PATH")
