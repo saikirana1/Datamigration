@@ -6,9 +6,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-neon_user = os.getenv("NEON_USER")
-neon_host = os.getenv("NEON_HOST")
-neon_password = os.getenv("NEON_PASSWORD")
+dest_user = os.getenv("DEST_USER")
+dest_host = os.getenv("DEST_HOST")
+dest_password = os.getenv("dest_PASSWORD")
 db_names = [db.strip() for db in os.getenv("PG_DATABASES", "").split(",")]
 psql_path = os.getenv("PSQL_PATH")  
 
@@ -18,7 +18,7 @@ if not psql_path or not os.path.exists(psql_path):
 def restore_to_neon(db_name):
   
     conn_str = (
-        f"postgresql://{neon_user}:{neon_password}@{neon_host}/{db_name}?sslmode=require"
+        f"postgresql://{dest_user}:{dest_password}@{dest_host}/{db_name}?sslmode=require"
     )
 
     

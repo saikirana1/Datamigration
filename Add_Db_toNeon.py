@@ -7,13 +7,13 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-NEON_API_KEY = os.getenv("NEON_API_KEY")
+dest_API_KEY = os.getenv("dest_API_KEY")
 PROJECT_ID = os.getenv("PROJECT_ID")
 BRANCH_ID = os.getenv("BRANCH_ID")
 
 
 HEADERS = {
-    "Authorization": f"Bearer {NEON_API_KEY}",
+    "Authorization": f"Bearer {dest_API_KEY}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 }

@@ -8,7 +8,7 @@ load_dotenv()
 
 def restore_roles_to_multiple_databases():
     psql_path = os.getenv("PSQL_PATH")
-    base_url = os.getenv("NEON_DATABASE_URL")
+    base_url = os.getenv("dest_DATABASE_URL")
     db_list_raw = os.getenv("PG_DATABASES")
 
     if not psql_path or not base_url or not db_list_raw:
