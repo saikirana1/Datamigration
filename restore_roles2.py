@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 from urllib.parse import urlparse, parse_qs
 
-# Load environment variables from .env
+
 load_dotenv()
 
 def restore_roles_to_multiple_databases():
@@ -18,7 +18,7 @@ def restore_roles_to_multiple_databases():
     parsed = urlparse(base_url)
     ssl_mode = parse_qs(parsed.query).get("sslmode", ["require"])[0]
 
-    # If no port is in the URL, default to 5432
+   
     port = parsed.port if parsed.port else 5432
 
     for db_name in database_names:

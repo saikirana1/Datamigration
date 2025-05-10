@@ -14,7 +14,7 @@ def dump_all_databases():
     if not all([pg_dump_path, pg_user, pg_password, db_list_raw]):
         raise ValueError("Missing required environment variables (PG_DUMP_PATH, PG_USERNAME, PG_PASSWORD, PG_DATABASES)")
 
-    # Convert comma-separated string to list and strip spaces
+    
     databases = [db.strip() for db in db_list_raw.split(",")]
 
     env = os.environ.copy()

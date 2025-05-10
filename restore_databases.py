@@ -2,26 +2,26 @@ import os
 import subprocess
 from dotenv import load_dotenv
 
-# Load environment variables
+
 load_dotenv()
 
-# Fetch Neon and PostgreSQL configuration from .env
+
 neon_user = os.getenv("NEON_USER")
 neon_host = os.getenv("NEON_HOST")
 neon_password = os.getenv("NEON_PASSWORD")
 db_names = [db.strip() for db in os.getenv("PG_DATABASES", "").split(",")]
-psql_path = os.getenv("PSQL_PATH")  # ✅ Now coming from .env
+psql_path = os.getenv("PSQL_PATH")  
 
 if not psql_path or not os.path.exists(psql_path):
     raise ValueError("❌ PSQL_PATH is not set correctly or psql not found.")
 
 def restore_to_neon(db_name):
-    # Construct Neon DB connection string
+  
     conn_str = (
         f"postgresql://{neon_user}:{neon_password}@{neon_host}/{db_name}?sslmode=require"
     )
 
-    # Expected SQL file name
+    
     sql_file = f"{db_name}.sql"
 
     if not os.path.exists(sql_file):

@@ -7,8 +7,8 @@ def dump_roles_to_sql():
 
     pg_dumpall_path = os.getenv("PG_DUMPALL_PATH")
     pg_user = os.getenv("PG_USERNAME")
-    pg_password = os.getenv("PG_PASSWORD")  # ✅ New line
-    pg_host = os.getenv("PG_HOST")  # ✅ New line
+    pg_password = os.getenv("PG_PASSWORD")  
+    pg_host = os.getenv("PG_HOST")  
 
     if not pg_user:
         raise ValueError("Environment variable PG_USERNAME is not set.")
@@ -17,7 +17,7 @@ def dump_roles_to_sql():
     if not pg_password:
         raise ValueError("Environment variable PG_PASSWORD is not set.")
 
-    # ✅ Set the environment variable for subprocess
+   
     env = os.environ.copy()
     env["PGPASSWORD"] = pg_password
 
