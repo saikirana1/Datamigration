@@ -24,7 +24,7 @@ def restore_roles_to_multiple_databases():
     for db_name in database_names:
         print(f"\n🔄 Restoring roles into database: {db_name}")
 
-        updated_url = f"{parsed.scheme}://{parsed.username}:{parsed.password}@{parsed.hostname}:{port}/{db_name}?sslmode={ssl_mode}"
+        updated_url = f""
 
         command = [psql_path, "-d", updated_url, "-f", "roles.sql"]
 

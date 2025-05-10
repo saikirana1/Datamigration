@@ -18,7 +18,7 @@ if not psql_path or not os.path.exists(psql_path):
 def restore_to_neon(db_name):
   
     conn_str = (
-        f"postgresql://{dest_user}:{dest_password}@{dest_host}/{db_name}?sslmode=require"
+        f""
     )
 
     

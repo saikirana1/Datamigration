@@ -20,7 +20,7 @@ HEADERS = {
 
 
 def wait_for_no_conflict():
-    check_url = f"https://console.neon.tech/api/v2/projects/{PROJECT_ID}/operations"
+    check_url = f""
     while True:
         res = requests.get(check_url, headers=HEADERS)
         data = res.json()
@@ -33,7 +33,7 @@ def wait_for_no_conflict():
 
 def create_database(db_name, owner_name):
     wait_for_no_conflict()
-    url = f"https://console.neon.tech/api/v2/projects/{PROJECT_ID}/branches/{BRANCH_ID}/databases"
+    url = f""
     payload = {
         "database": {
             "name": db_name,
